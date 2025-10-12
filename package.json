@@ -8,8 +8,7 @@
     "dev": "nodemon",
     "build": "tsc -p tsconfig.json"
   },
-  "license": "UNLICENSED",
-  "private": true,
+  "license": "ISC",
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.7.2",
