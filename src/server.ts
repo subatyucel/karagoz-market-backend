@@ -3,6 +3,7 @@ import cors from 'cors';
 import { getEnv } from 'utils/getEnv';
 import { errorHandler } from 'middlewares/errorHandler';
 import { notFoundHandler } from 'middlewares/notFoundHandler';
+import router from 'routes/index';
 
 const PORT = +getEnv('PORT', '3000');
 const app = express();
@@ -10,8 +11,9 @@ const app = express();
 export const setupServer = () => {
   app.use(cors());
   app.use(express.json());
+  app.use('/api', router);
 
-  app.use('*', notFoundHandler);
+  app.use(notFoundHandler);
   app.use(errorHandler);
   app.listen(PORT, () => console.log(`App is running on port: ${PORT}`));
 };
