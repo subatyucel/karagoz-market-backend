@@ -1,21 +1,21 @@
 import { model, Schema } from 'mongoose';
 import { excludeFields } from 'utils/excludeFields';
 
-interface IUser {
-  name: string;
-  surname: string;
+export interface IUser {
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   role?: 'customer' | 'owner' | 'employee';
 }
 
 const userSchema = new Schema<IUser>({
-  name: {
+  firstName: {
     type: String,
     required: [true, 'İsim bilgisi dolu olmalıdır.'],
     minLength: 3,
   },
-  surname: {
+  lastName: {
     type: String,
     required: [true, 'Soyisim bilgisi dolu olmalıdır.'],
     minLength: 3,
@@ -29,7 +29,13 @@ const userSchema = new Schema<IUser>({
   password: {
     type: String,
     required: [true, 'Şifre bilgisi dolu olmalıdır.'],
-    minlength: 12,
+    minlength: [12, 'Şifre en az 12 karakter içermelidir!'],
+    validate: {
+      validator: function (password: string) {
+        return /^(?=.*[A-Za-z])(?=.*\d).+$/.test(password);
+      },
+      message: 'Şifre en az bir harf ve bir rakam içermelidir!',
+    },
     select: false,
   },
   role: {
