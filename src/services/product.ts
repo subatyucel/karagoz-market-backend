@@ -18,3 +18,12 @@ export const addProduct = async (
 
   return await Product.create(payload);
 };
+
+export const deleteProduct = async (id: string) => {
+  const deletedProduct = await Product.findByIdAndDelete(id);
+
+  if (!deletedProduct)
+    throw createHttpError(404, 'Bu id hiç bir ürüne ait değil');
+
+  return deletedProduct;
+};

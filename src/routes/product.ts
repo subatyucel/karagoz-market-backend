@@ -1,4 +1,7 @@
-import { addProductController } from 'controllers/product';
+import {
+  addProductController,
+  deleteProductController,
+} from 'controllers/product';
 import { Router } from 'express';
 import { bodyValidator } from 'middlewares/bodyValidator';
 import { asyncWrapper } from 'utils/asyncWrapper';
@@ -11,5 +14,7 @@ router.post(
   bodyValidator(addProductSchema),
   asyncWrapper(addProductController),
 );
+
+router.delete('/:id', asyncWrapper(deleteProductController));
 
 export default router;
