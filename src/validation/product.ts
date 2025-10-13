@@ -27,6 +27,9 @@ export const addProductSchema = Joi.object<IProduct>({
   quantity: quantityField
     .required()
     .messages({ '*': 'Stok sayısı paylaşılmalıdır!' }),
+  category: stringMinMax
+    .required()
+    .messages({ '*': 'Kategori bilgisi dolu olmalıdır!' }),
 })
   .required()
   .messages({ '*': 'Ürün bilgileri paylaşılmalıdır!' });

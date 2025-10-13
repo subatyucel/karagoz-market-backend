@@ -85,7 +85,7 @@ export const getProducts = async (
   const total = await Product.countDocuments(query);
   const products = await Product.find(query).skip(skip).limit(limit);
 
-  if (!products) throw createHttpError(404, 'Hiç ürün bulunamadı!');
+  if (products.length === 0) throw createHttpError(404, 'Hiç ürün bulunamadı!');
 
   const totalPages = Math.ceil(total / limit);
   const hasNextPage = page < totalPages;
