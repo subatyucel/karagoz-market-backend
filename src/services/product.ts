@@ -27,3 +27,15 @@ export const deleteProduct = async (id: string) => {
 
   return deletedProduct;
 };
+
+export const updateProduct = async (id: string, payload: Partial<IProduct>) => {
+  const product = Product.findByIdAndUpdate(
+    id,
+    { $set: payload },
+    { new: true, runValidators: true },
+  );
+
+  if (!product) throw createHttpError(404, 'Bu id hiç bir ürüne ait değil!');
+
+  return product;
+};

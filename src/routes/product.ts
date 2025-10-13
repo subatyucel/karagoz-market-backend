@@ -1,11 +1,12 @@
 import {
   addProductController,
   deleteProductController,
+  updateProductController,
 } from 'controllers/product';
 import { Router } from 'express';
 import { bodyValidator } from 'middlewares/bodyValidator';
 import { asyncWrapper } from 'utils/asyncWrapper';
-import { addProductSchema } from 'validation/product';
+import { addProductSchema, updatedProductSchema } from 'validation/product';
 
 const router = Router();
 
@@ -16,5 +17,10 @@ router.post(
 );
 
 router.delete('/:id', asyncWrapper(deleteProductController));
+router.patch(
+  '/:id',
+  bodyValidator(updatedProductSchema),
+  asyncWrapper(updateProductController),
+);
 
 export default router;
