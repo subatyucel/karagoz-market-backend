@@ -22,6 +22,9 @@ export const addProductSchema = Joi.object<IProduct>({
     .trim()
     .optional()
     .messages({ '*': 'Fotoğraf geçerli bir URL olmalıdır!' }),
+  quantity: Joi.number()
+    .required()
+    .messages({ '*': 'Stok sayısı paylaşılmalıdır!' }),
 })
   .required()
   .messages({ '*': 'Ürün bilgileri paylaşılmalıdır!' });

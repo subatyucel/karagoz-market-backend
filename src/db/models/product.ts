@@ -6,6 +6,7 @@ export interface IProduct {
   brand: string;
   name: string;
   price: number;
+  quantity: number;
   photo?: string;
 }
 
@@ -15,6 +16,7 @@ const productSchema = new Schema<IProductDocument>({
   barcode: {
     type: String,
     required: [true, 'Ürün barkodu olmalıdır.'],
+    unique: true,
   },
   brand: {
     type: String,
@@ -31,6 +33,10 @@ const productSchema = new Schema<IProductDocument>({
   photo: {
     type: String,
     default: 'https://placehold.co/400?text=Ürün+Görseli+Bulunamadı',
+  },
+  quantity: {
+    type: Number,
+    required: [true, 'Stok sayısı paylaşılmalıdır!'],
   },
 });
 
