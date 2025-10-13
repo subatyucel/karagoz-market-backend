@@ -1,6 +1,7 @@
 import Joi from 'joi';
+import type { IProduct } from 'db/models/product';
 
-export const addProductSchema = Joi.object({
+export const addProductSchema = Joi.object<IProduct>({
   barcode: Joi.string()
     .trim()
     .pattern(/^(?:\d{8}|\d{12}|\d{13})$/)

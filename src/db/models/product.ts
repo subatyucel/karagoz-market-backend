@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema, type Document } from 'mongoose';
 import { excludeFields } from 'utils/excludeFields';
 
 export interface IProduct {
@@ -9,7 +9,9 @@ export interface IProduct {
   photo?: string;
 }
 
-const productSchema = new Schema<IProduct>({
+export interface IProductDocument extends IProduct, Document {}
+
+const productSchema = new Schema<IProductDocument>({
   barcode: {
     type: String,
     required: [true, 'Ürün barkodu olmalıdır.'],
@@ -32,8 +34,6 @@ const productSchema = new Schema<IProduct>({
   },
 });
 
-productSchema.set('toJSON', {
-  transform: (_, ret) => excludeFields(_, ret),
-});
+productSchema.set('toJSON', { transform: (_, ret) => excludeFields(_, ret) });
 
-export const Product = model<IProduct>('Product', productSchema);
+export const Product = model<IProductDocument>('Product', productSchema);

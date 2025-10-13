@@ -1,10 +1,10 @@
-import { Document } from 'mongoose';
+import { type Document } from 'mongoose';
 
-export const excludeFields = (
-  _: Document,
+export const excludeFields = <T extends Document>(
+  _: T,
   ret: Record<string, any>,
   fields?: string[],
-) => {
+): Record<string, any> => {
   delete ret.__v;
   ret.id = ret._id;
   delete ret._id;

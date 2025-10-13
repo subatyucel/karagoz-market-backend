@@ -8,7 +8,7 @@ export const initMongoDB = async () => {
     const url = getEnv('MONGODB_URL');
     const db = getEnv('MONGODB_DB');
 
-    mongoose.connect(
+    await mongoose.connect(
       `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority&appName=karagoz-market`,
     );
     console.log('Mongo connection is successful!');

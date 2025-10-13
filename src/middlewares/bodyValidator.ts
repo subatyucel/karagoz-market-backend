@@ -4,7 +4,7 @@ import type Joi from 'joi';
 
 export const bodyValidator =
   (schema: Joi.Schema) =>
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, _: Response, next: NextFunction) => {
     try {
       await schema.validateAsync(req.body, { abortEarly: false });
       next();

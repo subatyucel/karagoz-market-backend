@@ -1,7 +1,8 @@
 import { HttpError } from 'http-errors';
 import type { ErrorRequestHandler } from 'express';
+import { createErrorResponse } from 'utils/createResponse';
 
-export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+export const errorHandler: ErrorRequestHandler = (err, req, res, _) => {
   const isHttpError = err instanceof HttpError;
   const statusCode = isHttpError ? err.statusCode : 500;
   const message = isHttpError ? err.message : 'Internal Server Error';
@@ -15,10 +16,13 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     stack: isDevelopment ? err.stack : undefined,
   });
 
-  res.status(statusCode).json({
-    success: false,
-    message,
-    ...(err.errors && { errors: err.errors }),
-    ...(isDevelopment && { stack: err.stack }),
-  });
+  res
+    .status(statusCode)
+    .json(
+      createErrorResponse(
+        message,
+        err.errors,
+        isDevelopment ? err.stack : undefined,
+      ),
+    );
 };

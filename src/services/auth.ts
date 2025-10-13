@@ -1,8 +1,8 @@
 import createHttpError from 'http-errors';
-import { type IUser, User } from 'db/models/user';
+import { type IUser, type IUserDocument, User } from 'db/models/user';
 import bcrypt from 'bcrypt';
 
-export const registerUser = async (payload: IUser) => {
+export const registerUser = async (payload: IUser): Promise<IUserDocument> => {
   const { firstName, lastName, email, password } = payload;
 
   const user = await User.findOne({ email });

@@ -1,7 +1,13 @@
-import { Product, type IProduct } from 'db/models/product';
+import {
+  Product,
+  type IProduct,
+  type IProductDocument,
+} from 'db/models/product';
 import createHttpError from 'http-errors';
 
-export const addProduct = async (payload: IProduct) => {
+export const addProduct = async (
+  payload: IProduct,
+): Promise<IProductDocument> => {
   const { barcode } = payload;
   const product = await Product.findOne({ barcode });
   if (product)

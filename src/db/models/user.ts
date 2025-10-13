@@ -1,15 +1,22 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema, type Document } from 'mongoose';
 import { excludeFields } from 'utils/excludeFields';
 
+export enum UserRole {
+  CUSTOMER = 'customer',
+  OWNER = 'owner',
+  EMPLOYEE = 'employee',
+}
 export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  role?: 'customer' | 'owner' | 'employee';
+  role?: UserRole;
 }
 
-const userSchema = new Schema<IUser>({
+export interface IUserDocument extends IUser, Document {}
+
+const userSchema = new Schema<IUserDocument>({
   firstName: {
     type: String,
     required: [true, 'İsim bilgisi dolu olmalıdır.'],
@@ -30,18 +37,12 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: [true, 'Şifre bilgisi dolu olmalıdır.'],
     minlength: [12, 'Şifre en az 12 karakter içermelidir!'],
-    validate: {
-      validator: function (password: string) {
-        return /^(?=.*[A-Za-z])(?=.*\d).+$/.test(password);
-      },
-      message: 'Şifre en az bir harf ve bir rakam içermelidir!',
-    },
     select: false,
   },
   role: {
     type: String,
-    enum: ['customer', 'owner', 'employee'],
-    default: 'customer',
+    enum: Object.values(UserRole),
+    default: UserRole.CUSTOMER,
   },
 });
 
@@ -49,4 +50,4 @@ userSchema.set('toJSON', {
   transform: (_, ret) => excludeFields(_, ret, ['password']),
 });
 
-export const User = model<IUser>('User', userSchema);
+export const User = model<IUserDocument>('User', userSchema);
