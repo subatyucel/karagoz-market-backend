@@ -9,10 +9,15 @@ interface IUser {
 }
 
 const userSchema = new Schema<IUser>({
-  name: { type: String, required: [true, 'İsim bilgisi dolu olmalıdır.'] },
+  name: {
+    type: String,
+    required: [true, 'İsim bilgisi dolu olmalıdır.'],
+    minLength: 3,
+  },
   surname: {
     type: String,
     required: [true, 'Soyisim bilgisi dolu olmalıdır.'],
+    minLength: 3,
   },
   email: {
     type: String,
