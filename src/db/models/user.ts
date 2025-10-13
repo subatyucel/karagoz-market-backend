@@ -1,6 +1,14 @@
 import { model, Schema } from 'mongoose';
 
-const userSchema = new Schema({
+interface IUser {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  role?: 'customer' | 'owner' | 'employee';
+}
+
+const userSchema = new Schema<IUser>({
   name: { type: String, required: [true, 'İsim bilgisi dolu olmalıdır.'] },
   surname: {
     type: String,
@@ -21,8 +29,18 @@ const userSchema = new Schema({
   role: {
     type: String,
     enum: ['customer', 'owner', 'employee'],
-    default: 'customer  ',
+    default: 'customer',
   },
 });
 
-export const User = model('User', userSchema);
+userSchema.set('toJSON', {
+  transform: (_, ret: Record<string, any>) => {
+    delete ret.password;
+    delete ret.__v;
+    ret.id = ret._id;
+    delete ret._id;
+    return ret;
+  },
+});
+
+export const User = model<IUser>('User', userSchema);
