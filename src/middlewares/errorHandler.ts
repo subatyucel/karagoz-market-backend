@@ -1,12 +1,7 @@
 import { HttpError } from 'http-errors';
-import type { Request, Response, NextFunction } from 'express';
+import type { ErrorRequestHandler } from 'express';
 
-export const errorHandler = (
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   const isHttpError = err instanceof HttpError;
   const statusCode = isHttpError ? err.statusCode : 500;
   const message = isHttpError ? err.message : 'Internal Server Error';
