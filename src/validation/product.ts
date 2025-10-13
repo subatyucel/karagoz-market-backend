@@ -23,7 +23,9 @@ export const addProductSchema = Joi.object<IProduct>({
   price: priceField.required().messages({
     '*': 'Ürün fiyatı pozitif ve en fazla 2 ondalıklı bir sayı olması gerekir!',
   }),
-  photo: stringMinMax.messages({ '*': 'Fotoğraf geçerli bir URL olmalıdır!' }),
+  photo: Joi.string()
+    .uri()
+    .messages({ '*': 'Fotoğraf geçerli bir URL olmalıdır!' }),
   quantity: quantityField
     .required()
     .messages({ '*': 'Stok sayısı paylaşılmalıdır!' }),
