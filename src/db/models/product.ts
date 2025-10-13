@@ -8,6 +8,7 @@ export interface IProduct {
   price: number;
   quantity: number;
   photo?: string;
+  category: string;
 }
 
 export interface IProductDocument extends IProduct, Document {}
@@ -37,6 +38,10 @@ const productSchema = new Schema<IProductDocument>({
   quantity: {
     type: Number,
     required: [true, 'Stok sayısı paylaşılmalıdır!'],
+  },
+  category: {
+    type: String,
+    required: [true, 'Kategori bilgisi paylaşılmalıdır!'],
   },
 });
 

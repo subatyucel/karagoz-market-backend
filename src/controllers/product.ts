@@ -37,7 +37,7 @@ export const updateProductController = async (req: Request, res: Response) => {
 
 export const getProductsController = async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;
-  const limit = parseInt(req.query.page as string) || 10;
+  const limit = parseInt(req.query.limit as string) || 10;
   const filters = {
     category: (req.query.category as string) || undefined,
     search: (req.query.search as string) || undefined,
@@ -48,7 +48,6 @@ export const getProductsController = async (req: Request, res: Response) => {
       ? parseFloat(req.query.maxPrice as string)
       : undefined,
   };
-
   const products = await getProducts(page, limit, filters);
 
   res

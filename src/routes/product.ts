@@ -1,6 +1,7 @@
 import {
   addProductController,
   deleteProductController,
+  getProductsController,
   updateProductController,
 } from 'controllers/product';
 import { Router } from 'express';
@@ -23,4 +24,5 @@ router.patch(
   asyncWrapper(updateProductController),
 );
 
+router.get('/', asyncWrapper(getProductsController));
 export default router;

@@ -73,6 +73,7 @@ export const getProducts = async (
     query.$or = [
       { name: { $regex: filters.search, $options: 'i' } },
       { barcode: { $regex: filters.search, $options: 'i' } },
+      { brand: { $regex: filters.search, $options: 'i' } },
     ];
 
   if (filters.minPrice || filters.maxPrice) {
