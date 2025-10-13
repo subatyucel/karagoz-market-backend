@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { excludeFields } from 'utils/excludeFields';
 
 interface IUser {
   name: string;
@@ -39,13 +40,7 @@ const userSchema = new Schema<IUser>({
 });
 
 userSchema.set('toJSON', {
-  transform: (_, ret: Record<string, any>) => {
-    delete ret.password;
-    delete ret.__v;
-    ret.id = ret._id;
-    delete ret._id;
-    return ret;
-  },
+  transform: (_, ret) => excludeFields(_, ret, ['password']),
 });
 
 export const User = model<IUser>('User', userSchema);
